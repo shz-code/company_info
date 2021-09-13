@@ -1,3 +1,4 @@
+from django.http import request
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -23,9 +24,9 @@ def landing(request):
 
 @login_required
 def CompanyList(request):
-    queryset = Company.objects.all() 
-    queryset_count = queryset.count()
     user = request.user
+    queryset = Company.objects.filter(user=user) 
+    queryset_count = Company.objects.all().count()
     queryset_user_count = queryset.filter(user=user).count()
     context = {
         'companies' : queryset , 
@@ -42,7 +43,7 @@ class CompanyCreateView(LoginRequiredMixin ,generic.CreateView):
         context = super(CompanyCreateView , self).get_context_data(**kwargs)
         buss_form = CreateBusiness ()
         mang_form = CreateManagement ()
-        all_company = Company.objects.all()
+        all_company = Company.objects.filter(user=self.request.user)
         context.update({
              'buss_form' : buss_form,
              'mang_form' : mang_form,
@@ -100,7 +101,16 @@ def mng(request):
 class CompanyDetailView(LoginRequiredMixin ,generic.DetailView):
     template_name = 'companies/company_detail.html'
     queryset = Company.objects.all()
-    
+
+def  CompanyDetailView(request , pk):
+    user = request.user
+    company = Company.objects.get(id=pk)
+    if company.user == user:
+        context = {
+            "object": company,
+        }
+        return render(request ,"companies/company_detail.html",context)
+    return HttpResponse("HI")
 
 class CompanyUpdateView(LoginRequiredMixin , generic.UpdateView):
     template_name = 'companies/company_update.html'
