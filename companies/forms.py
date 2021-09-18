@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import models
 from .models import Company , Business , Management , EmailFromUser
 
 class CreateCompany(forms.ModelForm):
@@ -7,7 +6,7 @@ class CreateCompany(forms.ModelForm):
         model = Company
         fields = (
             'company_name',
-            'logo',
+            # 'logo',
             'business_type',
             'management_type',
             'incorporation_date',

@@ -40,7 +40,7 @@ class City(models.Model):
 
 class Company(models.Model):
     company_name = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to='company' , default='logo.png' , null=True)
+    #logo = models.ImageField(upload_to='company' , default='logo.png' , null=True)
     # business_type = models.ForeignKey('Business',blank=True , null=True  , on_delete=models.SET_NULL)
     business_type = models.ForeignKey('Business', on_delete=models.CASCADE)
     # management_type = models.ForeignKey('management' ,blank=True , null=True , on_delete=models.SET_NULL)

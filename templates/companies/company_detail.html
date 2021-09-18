@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{object.company_name}}{% endblock title %}
 {% block style %}
 <style>
@@ -35,7 +36,8 @@ div .link{
 
  <div class="px-4 py-5 my-5 text-center">
     <i>##########</i>
-    <img class=" img d-block mx-auto my-2" src=" {{object.logo.url}} " alt="logo">
+    <img class=" img d-block mx-auto my-2" src=" {% static 'logo.png' %} " alt="logo">
+    {% comment %} <img class=" img d-block mx-auto my-2" src=" {{object.logo.url}} " alt="logo"> {% endcomment %}
     <i>##########</i>
     <h1 class="display-5 fw-bold"> {{object.company_name}} </h1>
 
